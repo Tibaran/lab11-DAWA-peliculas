@@ -9,12 +9,12 @@ import { PagesModule } from './pages/pages.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    
+
     AppRoutingModule,
     ComponentsModule,
     PagesModule

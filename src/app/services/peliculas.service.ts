@@ -91,6 +91,15 @@ export class PeliculasService {
 
   }
 
+  getPeliculasSimilares( id: string ):Observable<Movie[]> {
+    const params = {...this.params, page: '1'};
+    return this.http.get<CarteleraResponse>(`${ this.baseUrl }/movie/${ id }/similar`, {
+      params
+    }).pipe(
+      map( resp => resp.results)
+    )
+  }
+
 
 }
 

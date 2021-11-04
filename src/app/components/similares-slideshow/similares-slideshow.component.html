@@ -1,0 +1,15 @@
+<div class="swiper-container">
+  <div class="swiper-wrapper">
+
+      <div *ngFor="let movie of movies"
+           class="swiper-slide text-white text-center">
+
+          <img [src]="movie.poster_path | poster"
+               [alt]="movie.title"
+               class="img-thumbnail"/>
+
+          {{ movie.title }}
+      </div>
+
+  </div>
+</div>

@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { PeliculasService } from '../../services/peliculas.service';
 import { MovieResponse } from '../../interfaces/movie-response';
 import { Cast } from '../../interfaces/credits-response';
+import { Movie } from '../../interfaces/cartelera-response';
 import { combineLatest } from 'rxjs';
 
 @Component({
@@ -16,6 +17,7 @@ export class PeliculaComponent implements OnInit {
 
   public pelicula: MovieResponse;
   public cast: Cast[] = [];
+  public movies: Movie[] = []
 
   constructor( private activatedRoute: ActivatedRoute,
                private peliculasService: PeliculasService,
@@ -29,24 +31,26 @@ export class PeliculaComponent implements OnInit {
     combineLatest([
 
       this.peliculasService.getPeliculaDetalle( id ),
-      this.peliculasService.getCast( id )
+      this.peliculasService.getCast( id ),
+      this.peliculasService.getPeliculasSimilares( id )
 
-    ]).subscribe( ( [pelicula, cast] ) => {
-      
+    ]).subscribe( ( [pelicula, cast, movies] ) => {
+
       if ( !pelicula ) {
         this.router.navigateByUrl('/home');
         return;
       }
 
-      this.pelicula = pelicula;  
+      this.pelicula = pelicula;
       this.cast = cast.filter( actor => actor.profile_path !== null );
+      this.movies = movies.filter( movie => movie.poster_path !== null);
     });
 
 
 
     // this.peliculasService.getPeliculaDetalle( id ).subscribe( movie => {
       // if ( !movie ) {
-      //   this.router.navigateByUrl('/home');
+      //   this.router.navigateeByUrl('/home');
       //   return;
       // }
       // this.pelicula = movie;
@@ -56,8 +60,8 @@ export class PeliculaComponent implements OnInit {
     //   console.log(cast)
     //   this.cast = cast.filter( actor => actor.profile_path !== null );
     // });
-    
-    
+
+
 
   }
 
